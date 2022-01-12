@@ -7,9 +7,11 @@ from django.contrib.contenttypes.models import ContentType
 class Course(models.Model):
     name = models.CharField(max_length=150,
                             verbose_name="Название курса")
-    owner = models.ForeignKey(get_user_model(),
-                              on_delete=models.CASCADE,
-                              verbose_name='Создатель курса')
+    student = models.ForeignKey(get_user_model(),
+                                on_delete=models.CASCADE,
+                                null=True,
+                                blank=True,
+                                verbose_name='Слушатель курса')
 
     class Meta:
         verbose_name = 'Курс'
@@ -90,9 +92,14 @@ class Link(BaseContent):
 
 
 class Content(models.Model):
+
     course = models.ForeignKey(Course,
                                on_delete=models.CASCADE,
                                related_name='contents')
+    owner = models.ForeignKey(get_user_model(),
+                              on_delete=models.CASCADE,
+                              related_name='%(class)s',
+                              verbose_name='Создатель контента курса')
     content_type = models.ForeignKey(ContentType,
                                      on_delete=models.CASCADE,
                                      limit_choices_to={'model__in': (
