@@ -1,30 +1,31 @@
 from django.contrib import admin
+from django.contrib.contenttypes.admin import GenericInlineModelAdmin
 from .models import Content, Course, Rating, File, Text, Link
 
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'name', )
 
 
 @admin.register(Text)
 class TextAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id',)
 
 
 @admin.register(File)
 class FileAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id',)
 
 
 @admin.register(Link)
 class LinkAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id',)
 
 
 @admin.register(Content)
 class ContentAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'content_type', 'course')
 
 
 @admin.register(Rating)

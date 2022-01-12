@@ -7,11 +7,9 @@ from django.contrib.contenttypes.models import ContentType
 class Course(models.Model):
     name = models.CharField(max_length=150,
                             verbose_name="Название курса")
-    student = models.ForeignKey(get_user_model(),
-                                on_delete=models.CASCADE,
-                                null=True,
-                                blank=True,
-                                verbose_name='Слушатель курса')
+    student = models.ManyToManyField(get_user_model(),
+                                     blank=True,
+                                     verbose_name='Слушатель курса')
 
     class Meta:
         verbose_name = 'Курс'
@@ -98,7 +96,7 @@ class Content(models.Model):
     owner = models.ForeignKey(get_user_model(),
                               on_delete=models.CASCADE,
                               related_name='%(class)s',
-                              verbose_name='Создатель контента курса')
+                              verbose_name='Создатель курса')
     content_type = models.ForeignKey(ContentType,
                                      on_delete=models.CASCADE,
                                      limit_choices_to={'model__in': (
@@ -110,7 +108,7 @@ class Content(models.Model):
 
     class Meta:
         verbose_name = 'Содержимое курса'
-        verbose_name_plural = 'Список содержимого курса'
+        verbose_name_plural = 'Список содержимого'
 
     def __str__(self):
         return f'{self.course} {self.content_type}'
