@@ -1,13 +1,14 @@
 from rest_framework.exceptions import ValidationError
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.generics import CreateAPIView
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes
 from rest_framework.response import Response
 from .models import Content, Course, Rating
 from .serializers import (CourseSerializer,
                           CourseEnrollSerializer,
                           ContentSerializer,
                           RatingSerializer)
+from .permissions import OnCoursePermission
 
 
 class CourseView(ReadOnlyModelViewSet):
@@ -23,12 +24,13 @@ class CourseView(ReadOnlyModelViewSet):
         course.student.add(request.user)
         return Response({'Регистрация': 'Вы успешно записались на курс'})
 
-    @action(methods=['GET'],
+    @action(permission_classes=[OnCoursePermission],
+            methods=['GET'],
             detail=True,
             url_path='content',
             serializer_class=ContentSerializer)
-    def get_course_content(self, request, pk=None, *args, **kwargs):
-        contents = Content.objects.filter(course_id=pk)
+    def get_course_content(self, request, *args, **kwargs):
+        contents = self.get_object().contents.prefetch_related('course')
         serializer = ContentSerializer(contents, many=True)
         return Response(serializer.data)
 
@@ -41,7 +43,8 @@ class CourseRatingCreateView(CreateAPIView):
     queryset = RatingSerializer
 
     def perform_create(self, serializer):
-        if Rating.objects.filter(course_id=self.request.data.get('course'), reviewer=self.request.user).exists():
+        if Rating.objects.filter(course_id=self.request.data.get('course'),
+                                 reviewer=self.request.user).exists():
             raise ValidationError('Вы оставляли оценку для этого курса')
         else:
             serializer.save(reviewer=self.request.user)

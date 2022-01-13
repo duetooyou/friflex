@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.contenttypes.admin import GenericInlineModelAdmin
 from .models import Content, Course, Rating, File, Text, Link
 
 
@@ -10,7 +9,7 @@ class CourseAdmin(admin.ModelAdmin):
 
 @admin.register(Text)
 class TextAdmin(admin.ModelAdmin):
-    list_display = ('id', 'description ')
+    list_display = ('id', 'description')
 
 
 @admin.register(File)

@@ -42,7 +42,7 @@ class ContentSerializer(serializers.ModelSerializer):
         Link: LinkSerializer(),
         File: FileSerializer()
     })
-    owner = serializers.StringRelatedField()
+    owner = serializers.StringRelatedField
 
     class Meta:
         model = Content
@@ -51,17 +51,8 @@ class ContentSerializer(serializers.ModelSerializer):
 
 class RatingSerializer(serializers.ModelSerializer):
 
-    course = serializers.StringRelatedField()
+    course = serializers.StringRelatedField
 
     class Meta:
         model = Rating
         exclude = ('reviewer',)
-
-
-class CourseWithContentSerializer(serializers.ModelSerializer):
-
-    content = ContentSerializer(many=True)
-
-    class Meta:
-        model = Course
-        fields = ('name', 'content')

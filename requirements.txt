@@ -1,3 +1,6 @@
 Django>=4.0.1
 djangorestframework>=3.13.1
-pip install -U drf-yasg[validation]
+drf-yasg[validation]>=1.20.0
+djangorestframework-simplejwt>=5.0.0
+rest-framework-generic-relations>=2.1.0
+django-debug-toolbar>=3.2.4
