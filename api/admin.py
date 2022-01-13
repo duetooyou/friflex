@@ -10,17 +10,17 @@ class CourseAdmin(admin.ModelAdmin):
 
 @admin.register(Text)
 class TextAdmin(admin.ModelAdmin):
-    list_display = ('id',)
+    list_display = ('id', 'description ')
 
 
 @admin.register(File)
 class FileAdmin(admin.ModelAdmin):
-    list_display = ('id',)
+    list_display = ('id', 'pdf_file')
 
 
 @admin.register(Link)
 class LinkAdmin(admin.ModelAdmin):
-    list_display = ('id',)
+    list_display = ('id', 'url')
 
 
 @admin.register(Content)
