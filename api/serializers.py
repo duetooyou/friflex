@@ -1,8 +1,5 @@
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
 from generic_relations.relations import GenericRelatedField
-from rest_framework.validators import UniqueTogetherValidator
-
 from .models import Course, Rating, Text, File, Link, Content
 
 

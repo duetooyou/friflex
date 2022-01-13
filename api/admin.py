@@ -4,7 +4,7 @@ from .models import Content, Course, Rating, File, Text, Link
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', )
+    list_display = ('id', 'name')
 
 
 @admin.register(Text)
