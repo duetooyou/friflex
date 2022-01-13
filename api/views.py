@@ -1,7 +1,7 @@
 from rest_framework.exceptions import ValidationError
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.generics import CreateAPIView
-from rest_framework.decorators import action, permission_classes
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import Content, Course, Rating
 from .serializers import (CourseSerializer,
@@ -30,7 +30,7 @@ class CourseView(ReadOnlyModelViewSet):
             url_path='content',
             serializer_class=ContentSerializer)
     def get_course_content(self, request, *args, **kwargs):
-        contents = self.get_object().contents.prefetch_related('course')
+        contents = self.get_object().contents
         serializer = ContentSerializer(contents, many=True)
         return Response(serializer.data)
 
