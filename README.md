@@ -2,6 +2,6 @@
 
 git clone https://github.com/duetooyou/friflex
 
-pip install -r requirments.txt
+pip install -r requirements.txt
 
 manage.py runserver
