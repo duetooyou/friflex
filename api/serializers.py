@@ -6,9 +6,6 @@ from rest_framework.validators import UniqueTogetherValidator
 from .models import Course, Rating, Text, File, Link, Content
 
 
-User = get_user_model()
-
-
 class LinkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Link
@@ -54,8 +51,17 @@ class ContentSerializer(serializers.ModelSerializer):
 
 class RatingSerializer(serializers.ModelSerializer):
 
-    course = serializers.PrimaryKeyRelatedField
+    course = serializers.StringRelatedField()
 
     class Meta:
         model = Rating
         exclude = ('reviewer',)
+
+
+class CourseWithContentSerializer(serializers.ModelSerializer):
+
+    content = ContentSerializer(many=True)
+
+    class Meta:
+        model = Course
+        fields = ('name', 'content')
