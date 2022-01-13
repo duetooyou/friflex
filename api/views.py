@@ -45,3 +45,6 @@ class CourseRatingCreateView(CreateAPIView):
             raise ValidationError('Вы оставляли оценку для этого курса')
         else:
             serializer.save(reviewer=self.request.user)
+
+    def get_view_name(self):
+        return f'Оценка курса'
