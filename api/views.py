@@ -41,6 +41,7 @@ class CourseView(ReadOnlyModelViewSet):
 class CourseRatingCreateView(CreateAPIView):
     serializer_class = RatingSerializer
     queryset = Rating.objects.all()
+    
     def perform_create(self, serializer):
         if Rating.objects.filter(course_id=self.request.data.get('course'),
                                  reviewer=self.request.user).exists():
